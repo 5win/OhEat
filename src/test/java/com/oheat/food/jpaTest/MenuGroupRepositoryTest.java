@@ -5,6 +5,7 @@ import static com.oheat.common.SidogunguFixture.seoul;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.oheat.common.TestConfig;
+import com.oheat.common.sigungu.SigunguJpaRepository;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.MenuGroupJpaEntity;
 import com.oheat.food.entity.MenuGroupMappingJpaEntity;
@@ -45,6 +46,8 @@ public class MenuGroupRepositoryTest {
     @Autowired
     private MenuJpaRepository menuJpaRepository;
     @Autowired
+    private SigunguJpaRepository sigunguJpaRepository;
+    @Autowired
     private EntityManager entityManager;
 
     @BeforeEach
@@ -70,6 +73,7 @@ public class MenuGroupRepositoryTest {
             .build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
 
         // 매장 저장한 뒤 삭제
         shopJpaRepository.save(shop);
@@ -98,6 +102,7 @@ public class MenuGroupRepositoryTest {
             .build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -124,6 +129,7 @@ public class MenuGroupRepositoryTest {
 
         // 메뉴는 저장하지 않음
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuGroupJpaRepository.save(menuGroup);
 
@@ -156,6 +162,7 @@ public class MenuGroupRepositoryTest {
         MenuJpaEntity menu = MenuJpaEntity.builder().name("황올").shop(shop).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuGroupJpaRepository.save(menuGroup);
         menuJpaRepository.save(menu);
@@ -183,6 +190,7 @@ public class MenuGroupRepositoryTest {
         MenuGroupJpaEntity menuGroup2 = MenuGroupJpaEntity.builder().name("양념").shop(shop).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuGroupJpaRepository.save(menuGroup1);
         menuGroupJpaRepository.save(menuGroup2);
@@ -216,6 +224,7 @@ public class MenuGroupRepositoryTest {
             .menuGroup(menuGroup).menu(menu2).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuGroupJpaRepository.save(menuGroup);
         menuJpaRepository.save(menu1);

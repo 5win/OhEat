@@ -41,9 +41,10 @@ public class MemoryShopRepository implements ShopRepository {
     }
 
     @Override
-    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, Pageable pageable) {
+    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, List<Integer> adjs, Pageable pageable) {
         List<ShopJpaEntity> shopList = shops.values().stream()
             .filter(shop -> shop.getCategory().equals(category))
+            .filter(shop -> adjs.contains(shop.getSigungu().getOgrFid()))
             .toList();
 
         if (pageable.getSort().getOrderFor("deliveryFee") != null) {

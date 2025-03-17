@@ -19,13 +19,17 @@ import com.oheat.food.exception.ShopNotExistsException;
 import com.oheat.food.repository.CategoryRepository;
 import com.oheat.food.repository.ShopRepository;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ShopService {
@@ -55,12 +59,28 @@ public class ShopService {
     public Page<ShopFindResponse> findShopByCategory(ShopFindRequest findRequest, Pageable pageable) {
         CategoryJpaEntity category = categoryRepository.findByName(findRequest.getCategoryName())
             .orElseThrow(CategoryNotExistsException::new);
+        Sigungu sigungu = sigunguRepository.findBySigKorNm(findRequest.getSigungu())
+            .orElseThrow(() -> new SigunguNotExistsException(HttpStatus.BAD_REQUEST, "존재하지 않는 시군구 지역입니다."));
+
+        // 인접 시군구 ( adj1hop[1] = 0110 1100 일 때, 왼쪽에서 두 번째 수 부터 ogr_fid 값)
+        List<Integer> adj = new ArrayList<>();
+        byte[] adj1hop = sigungu.getAdj1hop();
+        for (int idx = 0; idx < adj1hop.length; idx++) {
+            for (int k = 7; k >= 0; k--) {
+                if ((adj1hop[idx] & (1 << k)) > 0) {
+                    adj.add(idx * 8 + (7 - k));
+                }
+            }
+        }
 
         Order distanceOrder = pageable.getSort().getOrderFor("distance");
+        // 가까운 거리 순을 제외한 조회
         if (distanceOrder == null) {
-            return shopRepository.findByCategory(category, pageable)
+            return shopRepository.findByCategory(category, adj, pageable)
                 .map(ShopFindResponse::from);
         }
+
+        // 가까운 거리 순 조회
         return shopRepository.findByCategoryOrderByDistance(category, Coordinates.from(findRequest), pageable)
             .map(ShopFindResponse::from);
     }

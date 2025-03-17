@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import com.oheat.common.sigungu.SigunguJpaRepository;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.MenuJpaEntity;
 import com.oheat.food.entity.OptionGroupJpaEntity;
@@ -87,6 +88,8 @@ public class OrderIntegrationTest {
     private CartJpaRepository cartJpaRepository;
     @Autowired
     private PaymentJpaRepository paymentJpaRepository;
+    @Autowired
+    private SigunguJpaRepository sigunguJpaRepository;
 
     // Service Bean
     @Autowired
@@ -326,6 +329,7 @@ public class OrderIntegrationTest {
 
         userJpaRepository.save(user);
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuJpaRepository.save(menu);
         optionGroupJpaRepository.save(optionGroup1);
