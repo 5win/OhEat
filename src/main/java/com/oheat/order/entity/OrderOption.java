@@ -32,7 +32,7 @@ public class OrderOption extends BaseTimeEntity {
     private OptionJpaEntity option;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_option_group_id", nullable = false)
+    @JoinColumn(name = "orders_options_group_id", nullable = false)
     private OrderOptionGroup orderOptionGroup;
 
     @Builder

@@ -141,6 +141,7 @@ public class ShopServiceTest {
 
         ShopFindRequest findReq = ShopFindRequest.builder()
             .categoryName("치킨")
+            .sigungu("종로구")
             .build();
 
         PageRequest pageable = PageRequest.of(0, 5, Sort.by("id").descending());
@@ -155,6 +156,9 @@ public class ShopServiceTest {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         memoryCategoryRepository.save(category);
 
+        when(sigunguRepository.findBySigKorNm("종로구"))
+            .thenReturn(Optional.of(jongno_gu()));
+
         for (int i = 0; i < 3; i++) {
             memoryShopRepository.save(ShopJpaEntity.builder()
                 .name("bbq " + i + "호점")
@@ -163,6 +167,7 @@ public class ShopServiceTest {
                 .deliveryFee(10000 - 1000 * i)
                 .minimumOrderAmount(10000 - 1000 * i)
                 .category(category)
+                .sigungu(jongno_gu())
                 .build());
         }
 
@@ -170,6 +175,7 @@ public class ShopServiceTest {
             .categoryName("치킨")
             .latitude(37.9)
             .longitude(127.9)
+            .sigungu("종로구")
             .build();
 
         PageRequest pageable = PageRequest.of(0, 5, Sort.by("minimumOrderAmount").ascending());
@@ -187,6 +193,9 @@ public class ShopServiceTest {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         memoryCategoryRepository.save(category);
 
+        when(sigunguRepository.findBySigKorNm("종로구"))
+            .thenReturn(Optional.of(jongno_gu()));
+
         for (int i = 0; i < 3; i++) {
             memoryShopRepository.save(ShopJpaEntity.builder()
                 .name("bbq " + i + "호점")
@@ -195,6 +204,7 @@ public class ShopServiceTest {
                 .deliveryFee(10000 - 1000 * i)
                 .minimumOrderAmount(10000 - 1000 * i)
                 .category(category)
+                .sigungu(jongno_gu())
                 .build());
         }
 
@@ -202,6 +212,7 @@ public class ShopServiceTest {
             .categoryName("치킨")
             .latitude(37.9)
             .longitude(127.9)
+            .sigungu("종로구")
             .build();
 
         PageRequest pageable = PageRequest.of(0, 5, Sort.by("deliveryFee").ascending());
@@ -219,6 +230,9 @@ public class ShopServiceTest {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         memoryCategoryRepository.save(category);
 
+        when(sigunguRepository.findBySigKorNm("종로구"))
+            .thenReturn(Optional.of(jongno_gu()));
+
         for (int i = 0; i < 3; i++) {
             memoryShopRepository.save(ShopJpaEntity.builder()
                 .name("bbq " + i + "호점")
@@ -227,6 +241,7 @@ public class ShopServiceTest {
                 .deliveryFee(10000 - 1000 * i)
                 .minimumOrderAmount(10000 - 1000 * i)
                 .category(category)
+                .sigungu(jongno_gu())
                 .build());
         }
 
@@ -234,6 +249,7 @@ public class ShopServiceTest {
             .categoryName("치킨")
             .latitude(37.9)
             .longitude(127.9)
+            .sigungu("종로구")
             .build();
 
         PageRequest pageable = PageRequest.of(0, 5, Sort.by("distance").ascending());

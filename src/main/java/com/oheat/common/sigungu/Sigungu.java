@@ -2,8 +2,6 @@ package com.oheat.common.sigungu;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -21,7 +19,6 @@ import org.locationtech.jts.geom.Geometry;
 public class Sigungu {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ogr_fid", nullable = false)
     private Integer ogrFid;
 
@@ -37,12 +34,16 @@ public class Sigungu {
     @Column(name = "sig_eng_nm", length = 40)
     private String sigEngNm;
 
+    @Column(name = "adj_1hop", columnDefinition = "BINARY(32)")
+    private byte[] adj1hop;
+
     @Builder
-    public Sigungu(Integer ogrFid, Geometry geometry, String sigCd, String sigKorNm, String sigEngNm) {
+    public Sigungu(Integer ogrFid, Geometry geometry, String sigCd, String sigKorNm, String sigEngNm, byte[] adj1hop) {
         this.ogrFid = ogrFid;
         this.geometry = geometry;
         this.sigCd = sigCd;
         this.sigKorNm = sigKorNm;
         this.sigEngNm = sigEngNm;
+        this.adj1hop = adj1hop;
     }
 }

@@ -5,6 +5,7 @@ import static com.oheat.common.SidogunguFixture.seoul;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.oheat.common.TestConfig;
+import com.oheat.common.sigungu.SigunguJpaRepository;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.MenuJpaEntity;
 import com.oheat.food.entity.OptionGroupJpaEntity;
@@ -44,6 +45,8 @@ public class MenuRepositoryTest {
     @Autowired
     private OptionJpaRepository optionJpaRepository;
     @Autowired
+    private SigunguJpaRepository sigunguJpaRepository;
+    @Autowired
     private EntityManager entityManager;
 
     @BeforeEach
@@ -82,6 +85,7 @@ public class MenuRepositoryTest {
             .sigungu(jongno_gu())
             .build();
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -105,6 +109,7 @@ public class MenuRepositoryTest {
             .sigungu(jongno_gu())
             .build();
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         for (int i = 0; i < 3; i++) {
@@ -140,6 +145,7 @@ public class MenuRepositoryTest {
             .name("순살").optionGroup(optionGroup).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         // 저장 과정에서 예외 발생 X
@@ -187,6 +193,7 @@ public class MenuRepositoryTest {
             .name("스프라이트").optionGroup(optionGroup2).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         // 메뉴 저장
@@ -229,6 +236,7 @@ public class MenuRepositoryTest {
             .name("순살").optionGroup(optionGroup).build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuJpaRepository.save(menu);
         optionGroupJpaRepository.save(optionGroup);

@@ -1,5 +1,6 @@
 package com.oheat.food.repository;
 
+import static com.oheat.common.sigungu.QSigungu.sigungu;
 import static com.oheat.food.entity.QShopJpaEntity.shopJpaEntity;
 
 import com.oheat.food.dto.Coordinates;
@@ -24,13 +25,15 @@ public class ShopCustomRepositoryImpl implements ShopCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, Pageable pageable) {
+    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, List<Integer> adjs, Pageable pageable) {
 
         OrderSpecifier[] orders = createOrderSpecifier(pageable.getSort());
 
         List<ShopJpaEntity> content = jpaQueryFactory
             .selectFrom(shopJpaEntity)
-            .where(shopJpaEntity.category.eq(category))
+            .innerJoin(sigungu)
+            .on(shopJpaEntity.sigungu.eq(sigungu))
+            .where(shopJpaEntity.category.eq(category).and(sigungu.ogrFid.in(adjs)))
             .orderBy(orders)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())

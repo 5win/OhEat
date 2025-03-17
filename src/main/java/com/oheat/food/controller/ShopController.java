@@ -38,12 +38,14 @@ public class ShopController {
         @RequestParam String category,
         @RequestParam(required = false) Double latitude,
         @RequestParam(required = false) Double longitude,
+        @RequestParam(required = false) String sigungu,
         Pageable pageable) {
 
         ShopFindRequest findReq = ShopFindRequest.builder()
             .categoryName(category)
             .latitude(latitude)
             .longitude(longitude)
+            .sigungu(sigungu)
             .build();
 
         return shopService.findShopByCategory(findReq, pageable);

@@ -4,6 +4,7 @@ import static com.oheat.common.SidogunguFixture.jongno_gu;
 import static com.oheat.common.SidogunguFixture.seoul;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.oheat.common.sigungu.SigunguJpaRepository;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.MenuJpaEntity;
 import com.oheat.food.entity.OptionGroupJpaEntity;
@@ -56,6 +57,8 @@ public class CartIntegrationTest {
     private OptionJpaRepository optionJpaRepository;
     @Autowired
     private CartJpaRepository cartJpaRepository;
+    @Autowired
+    private SigunguJpaRepository sigunguJpaRepository;
     @Autowired
     private EntityManager entityManager;
 
@@ -303,6 +306,7 @@ public class CartIntegrationTest {
 
         userJpaRepository.save(user);
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
         menuJpaRepository.save(menu);
         optionGroupJpaRepository.save(optionGroup1);

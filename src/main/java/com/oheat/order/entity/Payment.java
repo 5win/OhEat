@@ -26,7 +26,7 @@ public class Payment extends BaseTimeEntity {
     @Column(name = "payment_key", nullable = false)
     private String paymentKey;
 
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "orders_id", nullable = false)
     private UUID orderId;
 
     @Column(name = "total_amount", nullable = false)
