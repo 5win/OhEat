@@ -37,12 +37,16 @@ public class Sigungu {
     @Column(name = "sig_eng_nm", length = 40)
     private String sigEngNm;
 
+    @Column(name = "adj_1hop", columnDefinition = "BINARY(32)")
+    private byte[] adj1hop;
+
     @Builder
-    public Sigungu(Integer ogrFid, Geometry geometry, String sigCd, String sigKorNm, String sigEngNm) {
+    public Sigungu(Integer ogrFid, Geometry geometry, String sigCd, String sigKorNm, String sigEngNm, byte[] adj1hop) {
         this.ogrFid = ogrFid;
         this.geometry = geometry;
         this.sigCd = sigCd;
         this.sigKorNm = sigKorNm;
         this.sigEngNm = sigEngNm;
+        this.adj1hop = adj1hop;
     }
 }

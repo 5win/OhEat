@@ -3,6 +3,7 @@ package com.oheat.food.repository;
 import com.oheat.food.dto.Coordinates;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.ShopJpaEntity;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,8 +32,8 @@ public class ShopRepositoryImpl implements ShopRepository {
     }
 
     @Override
-    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, Pageable pageable) {
-        return shopJpaRepository.findByCategory(category, pageable);
+    public Page<ShopJpaEntity> findByCategory(CategoryJpaEntity category, List<Integer> adjs, Pageable pageable) {
+        return shopJpaRepository.findByCategory(category, adjs, pageable);
     }
 
     @Override

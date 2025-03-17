@@ -12,4 +12,5 @@ public class ShopFindRequest {
     private final String categoryName;
     private final Double latitude;
     private final Double longitude;
+    private final String sigungu;
 }
