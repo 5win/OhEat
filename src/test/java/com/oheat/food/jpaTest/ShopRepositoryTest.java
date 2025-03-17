@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.oheat.common.TestConfig;
+import com.oheat.common.sigungu.SigunguJpaRepository;
 import com.oheat.food.dto.Coordinates;
 import com.oheat.food.entity.CategoryJpaEntity;
 import com.oheat.food.entity.ShopJpaEntity;
@@ -37,6 +38,8 @@ public class ShopRepositoryTest {
     private ShopJpaRepository shopJpaRepository;
     @Autowired
     private CategoryJpaRepository categoryJpaRepository;
+    @Autowired
+    private SigunguJpaRepository sigunguJpaRepository;
     @Autowired
     private EntityManager entityManager;
 
@@ -77,6 +80,7 @@ public class ShopRepositoryTest {
             .build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
 
         assertDoesNotThrow(() -> shopJpaRepository.save(shop));
     }
@@ -99,6 +103,7 @@ public class ShopRepositoryTest {
             .build();
 
         categoryJpaRepository.save(category);
+        sigunguJpaRepository.save(jongno_gu());
         shopJpaRepository.save(shop);
 
         assertThrows(DataIntegrityViolationException.class, () -> {
@@ -122,6 +127,8 @@ public class ShopRepositoryTest {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
 
+        sigunguJpaRepository.save(jongno_gu());
+
         for (int i = 0; i < 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
                 .name("bbq " + i + "호점")
@@ -135,7 +142,7 @@ public class ShopRepositoryTest {
         }
 
         PageRequest page0 = PageRequest.of(0, 5);
-        Page<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, page0);
+        Page<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, List.of(1), page0);
 
         assertThat(result.getContent().size()).isEqualTo(3);
     }
@@ -145,6 +152,8 @@ public class ShopRepositoryTest {
     void givenSevenShops_whenFindShopByCategory_thenPage0Return5AndPage1Return2() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 0; i < 7; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
@@ -161,9 +170,9 @@ public class ShopRepositoryTest {
         PageRequest page0 = PageRequest.of(0, 5);
         PageRequest page1 = PageRequest.of(1, 5);
         Page<ShopJpaEntity> result1 = shopJpaRepository
-            .findByCategory(category, page0);
+            .findByCategory(category, List.of(1), page0);
         Page<ShopJpaEntity> result2 = shopJpaRepository
-            .findByCategory(category, page1);
+            .findByCategory(category, List.of(1), page1);
 
         assertThat(result1.getContent().size()).isEqualTo(5);
         assertThat(result2.getContent().size()).isEqualTo(2);
@@ -176,6 +185,8 @@ public class ShopRepositoryTest {
     void whenSortByDefault_thenRecentRegistrationOrder() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 1; i <= 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
@@ -190,7 +201,7 @@ public class ShopRepositoryTest {
         }
 
         PageRequest page0 = PageRequest.of(0, 5, Sort.by("id").descending());
-        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, page0)
+        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, List.of(1), page0)
             .getContent();
 
         assertThat(result.get(0).getId()).isEqualTo(3L);
@@ -203,6 +214,8 @@ public class ShopRepositoryTest {
     void whenSortByDeliveryTip_thenDeliveryTipAscendingOrder() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 1; i <= 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
@@ -218,7 +231,7 @@ public class ShopRepositoryTest {
         }
 
         PageRequest page0 = PageRequest.of(0, 5, Sort.by("deliveryFee").ascending());
-        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, page0)
+        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, List.of(1), page0)
             .getContent();
 
         assertThat(result.get(0).getId()).isEqualTo(3L);
@@ -231,6 +244,8 @@ public class ShopRepositoryTest {
     void whenSortByMinimumOrderAmount_thenMinimumOrderAmountAscendingOrder() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 1; i <= 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
@@ -246,7 +261,7 @@ public class ShopRepositoryTest {
         }
 
         PageRequest page0 = PageRequest.of(0, 5, Sort.by("minimumOrderAmount").ascending());
-        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, page0)
+        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, List.of(1), page0)
             .getContent();
 
         assertThat(result.get(0).getId()).isEqualTo(3L);
@@ -259,6 +274,8 @@ public class ShopRepositoryTest {
     void whenSortByMinimumOrderAmountAndId_thenMinimumOrderAmountAscendingAndIdDescendingOrder() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 1; i <= 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()
@@ -275,7 +292,7 @@ public class ShopRepositoryTest {
 
         PageRequest page0 = PageRequest.of(0, 5, Sort.by("minimumOrderAmount").ascending()
             .and(Sort.by("id").descending()));
-        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, page0)
+        List<ShopJpaEntity> result = shopJpaRepository.findByCategory(category, List.of(1), page0)
             .getContent();
 
         assertThat(result.get(0).getId()).isEqualTo(1L);
@@ -288,6 +305,8 @@ public class ShopRepositoryTest {
     void whenSortByNearestOrder_thenDistanceInMyLocationAscendingOrder() {
         CategoryJpaEntity category = CategoryJpaEntity.builder().name("치킨").build();
         categoryJpaRepository.save(category);
+
+        sigunguJpaRepository.save(jongno_gu());
 
         for (int i = 1; i <= 3; i++) {
             shopJpaRepository.save(ShopJpaEntity.builder()

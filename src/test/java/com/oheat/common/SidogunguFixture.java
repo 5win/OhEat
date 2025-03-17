@@ -2,6 +2,10 @@ package com.oheat.common;
 
 import com.oheat.common.sido.Sido;
 import com.oheat.common.sigungu.Sigungu;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Polygon;
 
 public class SidogunguFixture {
 
@@ -16,12 +20,16 @@ public class SidogunguFixture {
     }
 
     public static Sigungu jongno_gu() {
+        GeometryFactory geometryFactory = new GeometryFactory();
+
+        LinearRing shell = geometryFactory.createLinearRing(new Coordinate[]{});
         return Sigungu.builder()
             .ogrFid(1)
-            .geometry(null)
+            .geometry(new Polygon(shell, null, geometryFactory))
             .sigCd("11110")
             .sigKorNm("종로구")
             .sigEngNm("Jongno-gu")
+            .adj1hop(new byte[]{(byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff})
             .build();
     }
 }

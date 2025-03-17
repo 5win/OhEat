@@ -2,8 +2,6 @@ package com.oheat.common.sigungu;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -21,7 +19,6 @@ import org.locationtech.jts.geom.Geometry;
 public class Sigungu {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ogr_fid", nullable = false)
     private Integer ogrFid;
 
